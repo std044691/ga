@@ -23,6 +23,7 @@ public class GeneticAlg1 {
         this.bestsolution = new Atom("0000");        
     }
 
+    //Αρχικοποίηση του πληθισμού. Επιλέγεις η σταθερή η τυχαία
     public ArrayList<Atom> initialiePopulation(int size) {
         ArrayList<Atom> atoms = new ArrayList<Atom>();
         atoms = randomSolutions(size);
@@ -64,7 +65,7 @@ public class GeneticAlg1 {
         return rands;
     }
 
-    //Υπολογισμός αθροιστικών πιθανοτήτων
+    //Υπολογισμός αθροιστικών πιθανοτήτων και το στίσιμο της ρουλέτας. Εδώ η εμβέλειες αποθηκεύονται στο αντικείμενο Atom δηλαδή το κάθε χρωμόσωμα ξέρει την εμβέλεια του
     public ArrayList<Double> generateProbabilitySum(ArrayList<Atom> atoms) {
         ArrayList<Double> probabilitySum = new ArrayList<Double>();
         Double temp = new Double(0.00);
@@ -109,13 +110,10 @@ public class GeneticAlg1 {
         return children;
     }
 
+    //Συνάρτηση αξιολόγισης. Αν ξεπερνάει το συνολικό βάρος της τσάντας το βάζουμε 1 αν είναι οκ τότε απλά αθροίζουμε τα βάροι των άσσων που αντιστοιχούν το αντικείμενο
+    //Εδώ χρησιμοποιείτε η atoms που είναι τα άτομα ΠΧ, 0110 που αντιστοιχεί στο πάρε το αντικείμενο το δεύτερο και το τρίτο. Οπότε η αξιολόγιση είναι και το άθροισμα τους.
     public void calculatefitness(ArrayList<Atom> atoms, ArrayList<Item> items, int maxWeight) {
-        this.maxWeight = maxWeight;
-        //Item 1 {p=10,w=10}
-        //Item 2 {p=7 ,w=3}
-        //Item 3 {p=8 ,w=1}
-        //Item 4 {p=5 ,w=2}
-        //Bag weight = 12    
+        this.maxWeight = maxWeight;       
         double totalFitness = 0;        
         for (Atom atom : atoms) {
             double totalWeight = 0;
@@ -143,7 +141,8 @@ public class GeneticAlg1 {
             //totalf += atom.fitness;
         }       
     }
-        
+     
+    //Απλά κρατάμε την καλύτερη λύση
     public void evaluation(ArrayList<Atom> atoms) throws CloneNotSupportedException{
         for(Atom atom :atoms){
             if(this.bestsolution.value<atom.value && atom.weight<=this.maxWeight){
@@ -153,6 +152,7 @@ public class GeneticAlg1 {
     }
     
 
+    //Γεννάει τυχαίες λύσεις στο πρόβλημα
     public ArrayList<Atom> randomSolutions(int size) {
          ArrayList<Atom> atoms = new ArrayList<Atom>();             
          int min = 0;
@@ -173,6 +173,7 @@ public class GeneticAlg1 {
          //System.out.println("");
          return atoms;
      }
+    //Καρφωτές λύσεις
     public ArrayList<Atom> customSolutions() {
          ArrayList<Atom> atoms = new ArrayList<Atom>();             
          Atom a = new Atom("00110");
@@ -192,8 +193,7 @@ public class GeneticAlg1 {
 
          return atoms;
      }
-
-
+    //Επιστρέφει την καλύτερη λύση
     public Atom getBestsolution() {
          return bestsolution;
      }
