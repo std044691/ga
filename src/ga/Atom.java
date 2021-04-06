@@ -9,7 +9,7 @@ package ga;
  *
  * @author themhz
  */
-public class Atom {
+public class Atom implements Cloneable{
     public String letter;
     public Double probability;
     public Double from;
@@ -37,6 +37,17 @@ public class Atom {
                 " fitness :"+this.fitness + 
                 " from :"+this.from + " - " + this.to + 
                 "\n";
+    }
+    
+    private String str;    
+    public void setStr(String str){
+        this.str = str;
+    }
+    public void display(){
+        System.out.println("The String is "+str);
+    }
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
     
 }
